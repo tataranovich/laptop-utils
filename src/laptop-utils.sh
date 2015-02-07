@@ -69,10 +69,12 @@ setup_displays() {
         else
             # Enable laptop display anyway if no additional display connected
             xrandr --output "$LCDPANEL" --auto
+            xbacklight -set 50
         fi
     else
         # Enable laptop display when lid is open
         xrandr --output "$LCDPANEL" --auto
+        xbacklight -set 50
     fi
 
     if [ -x "`which openbox`" ]; then
