@@ -1,0 +1,6 @@
+
+[Desktop Entry]
+Type=Application
+Name=Laptop utils
+Comment=Laptop docking station support
+Exec=laptop-utils.sh

@@ -1,0 +1,7 @@
+# Hibernate laptop after 4 hours in suspend mode
+AUTO_HIBERNATE=14400
+
+# Defaults for Dell Latitude E6430
+TOUCHPAD='AlpsPS/2 ALPS DualPoint TouchPad'
+STICK='DualPoint Stick'
+LCDPANEL='LVDS1'

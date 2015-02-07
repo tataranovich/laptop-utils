@@ -1,0 +1,33 @@
+#!/bin/sh
+# License: GPLv3
+# Copyright 2015 Andrey Tataranovich <tataranovich@gmail.com>
+
+TIME_NOW=$(date +%s)
+AUTO_HIBERNATE=14400
+if [ -r /etc/default/laptop-utils ]; then
+    . /etc/default/laptop-utils
+fi
+
+if [ "$1" = "suspend" ]
+then
+	# Suspending.  Record current time, and set a wake up timer.
+	echo "$TIME_NOW" >/var/run/pm-utils/locks/rtchibernate.lock
+	rtcwake -m no -s "$AUTO_HIBERNATE"
+fi
+
+if [ "$1" = "resume" ]
+then
+	# Coming out of sleep
+	TIME_SUSPEND=$(cat /var/run/pm-utils/locks/rtchibernate.lock)
+	rm /var/run/pm-utils/locks/rtchibernate.lock
+	# Did we wake up due to the rtc timer above?
+	if [ $(($TIME_NOW - $TIME_SUSPEND)) -ge $AUTO_HIBERNATE ]
+	then
+		# Then hibernate
+		rm /var/run/pm-utils/locks/pm-suspend.lock
+		/usr/sbin/pm-hibernate
+	else
+		# Otherwise cancel the rtc timer and wake up normally.
+		rtcwake -m no -s 1
+	fi
+fi
