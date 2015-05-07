@@ -87,9 +87,9 @@ setup_input
 setup_displays
 
 # Monitor system messages to catch resume event
-dbus-monitor --system "type='signal',sender='org.freedesktop.UPower',path='/org/freedesktop/UPower',member='Resuming'" | while read EVENT
+dbus-monitor --system "type='signal',sender='org.freedesktop.UPower',path='/org/freedesktop/UPower',member='Resuming'" "type='signal',path='/org/freedesktop/login1',interface='org.freedesktop.login1.Manager',member='PrepareForSleep'" | while read EVENT
 do
-    if echo $EVENT | grep -q Resuming; then
+    if echo $EVENT | grep -Eq '(Resuming|false)'; then
         setup_input
         setup_displays
     fi
