@@ -5,10 +5,33 @@
 TOUCHPAD='AlpsPS/2 ALPS DualPoint TouchPad'
 STICK='DualPoint Stick'
 LCDPANEL='LVDS1'
+PIDFILE=/tmp/laptop-utils.$(id -u).pid
 
 if [ -r /etc/default/laptop-utils ]; then
     . /etc/default/laptop-utils
 fi
+
+create_pid() {
+    rm -f $PIDFILE
+    echo $$ > $PIDFILE
+    chmod 0400 $PIDFILE
+}
+
+delete_pid() {
+    rm $PIDFILE
+}
+
+refresh_session() {
+    if [ -f $PIDFILE ]; then
+        OLDPID=$(cat $PIDFILE)
+        for CHILDPID in $(pgrep -P $OLDPID)
+        do
+            kill $CHILDPID 2>/dev/null
+        done
+        kill $OLDPID 2>/dev/null
+    fi
+    create_pid
+}
 
 xinput_check() {
     local XINPUT_NAME
@@ -82,6 +105,12 @@ setup_displays() {
     fi
 
 }
+
+if [ -f $PIDFILE ]; then
+    refresh_session
+else
+    create_pid
+fi
 
 setup_input
 setup_displays

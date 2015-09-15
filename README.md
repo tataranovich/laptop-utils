@@ -1,6 +1,6 @@
 # Laptop utils
 
-Varios utils for linux-powered laptops.
+Various utils for linux-powered laptops. Multiple sessions are supported.
 
 ## Installation
 
@@ -16,7 +16,7 @@ Scripts adopted for Dell Latitude laptops. But I believe them can be helpfull fo
 
 ### Hibernate after suspend
 
-You need to install pm-utils first. Next you need to set appropriate value for AUTO_HIBERNATE variable in /etc/default/laptop-utils. This variable control how much seconds will pass before laptop will hibernate after suspend.
+You need to install pm-utils first. Next you need to set appropriate value for AUTO\_HIBERNATE variable in /etc/default/laptop-utils. This variable controls how many seconds will pass before laptop will hibernate after suspend.
 
 ### Dell dock support
 
