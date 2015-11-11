@@ -4,6 +4,13 @@
 
 TIME_NOW=$(date +%s)
 AUTO_HIBERNATE=14400
+
+# Do not use hibernate after suspend if hibernate
+# is disabled by kernel change flag
+if [ -e /var/run/do-not-hibernate ]; then
+    exit 0
+fi
+
 if [ -r /etc/default/laptop-utils ]; then
     . /etc/default/laptop-utils
 fi
