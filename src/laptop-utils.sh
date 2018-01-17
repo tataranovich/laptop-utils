@@ -119,7 +119,8 @@ setup_displays
 dbus-monitor --system "type='signal',sender='org.freedesktop.UPower',path='/org/freedesktop/UPower',member='Resuming'" "type='signal',path='/org/freedesktop/login1',interface='org.freedesktop.login1.Manager',member='PrepareForSleep'" | while read EVENT
 do
     if echo $EVENT | grep -Eq '(Resuming|false)'; then
-        setup_input
         setup_displays
+        sleep 1
+        setup_input
     fi
 done
